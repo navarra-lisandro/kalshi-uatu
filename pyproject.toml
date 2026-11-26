@@ -1,14 +1,26 @@
 [project]
 name = "kalshi-uatu"
 version = "0.0.1"
-description = "LLM-assisted, human-approved trading assistant for Kalshi"
+description = "LLM-assisted, human-in-the-loop trading assistant for Kalshi prediction markets"
 readme = "README.md"
 requires-python = ">=3.12"
-license = { text = "MIT" }
+license = "MIT"
 dependencies = []
 
-[project.scripts]
-uatu = "uatu.cli:app"
+[dependency-groups]
+dev = [
+    "mypy>=1.13",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.8",
+]
+
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/uatu"]
 
 [tool.ruff]
 line-length = 100
@@ -18,11 +30,21 @@ target-version = "py312"
 select = ["E", "F", "W", "I", "N", "UP", "B", "S", "SIM", "RUF", "ANN", "PT"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101", "ANN"]
+"tests/**" = ["S101"]
 
 [tool.mypy]
 strict = true
 python_version = "3.12"
+files = ["src", "tests"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = "--strict-markers"
+
+[tool.coverage.run]
+source = ["uatu"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
