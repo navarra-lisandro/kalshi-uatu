@@ -24,6 +24,9 @@ jobs:
       pull-requests: write
       id-token: write
     steps:
+      - name: Record start time
+        id: start
+        run: echo "ts=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 1
@@ -52,3 +55,18 @@ jobs:
           claude_args: >-
             --max-turns 15
             --allowedTools "Read,Glob,Grep,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*)"
+      # The action exits 0 without reviewing when it skips (e.g. this workflow differs from main).
+      # Fail unless a bot review comment was actually posted during this run (ADR-0019).
+      - name: Verify a review was posted
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          SINCE: ${{ steps.start.outputs.ts }}
+        run: |
+          count=$(gh api "repos/$REPO/issues/$PR/comments" --paginate | jq -s --arg since "$SINCE" \
+            '[.[][] | select(.user.type == "Bot" and .user.login != "github-actions[bot]" and .created_at >= $since)] | length')
+          if [ "${count:-0}" -eq 0 ]; then
+            echo "::error::No AI review comment was posted. If this PR changes ai-review.yml, merge via maintainer bypass (ADR-0019)."
+            exit 1
+          fi
