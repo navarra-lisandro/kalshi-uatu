@@ -1,0 +1,54 @@
+name: AI review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  claude-review:
+    name: ai-review
+    # Fork PRs get no secrets on `pull_request`; skip them instead of failing (ADR-0019).
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: anthropics/claude-code-action@4411a9e9b0283becf4b924f7bce360fd7756c78c # v1.0.290
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Review this pull request for Kalshi Uatu, a trading assistant that places real-money orders.
+            Read CLAUDE.md and the ADRs in docs/adr/ first; flag any change that contradicts an accepted ADR
+            without a superseding ADR.
+
+            Prioritize, in order:
+            1. Secrets: keys or signatures that could be logged, serialized, committed, or read from env/.env.
+            2. Order safety: anything that could bypass human approval, risk gates, reduce-only exits,
+               or route orders to production by default.
+            3. Money correctness: floats in price/size/P&L paths, unit mix-ups (cents vs dollars), rounding.
+            4. CI/supply chain: unpinned actions, broadened workflow permissions, secrets exposed to PRs.
+            5. Code quality: typing, tests for new behavior, pythonic clarity.
+
+            Be concise. Post exactly one PR comment with: a one-line verdict, then findings grouped by
+            severity (blocker / should-fix / nit), each with file:line. Do not approve or request changes.
+          claude_args: >-
+            --max-turns 15
+            --allowedTools "Read,Glob,Grep,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*)"
