@@ -1,0 +1,35 @@
+# Secrets — never commit (ADR-0007, ADR-0015)
+*.pem
+*.key
+*.p12
+.env
+.env.*
+secrets/
+
+# Private strategy (ADR-0002)
+strategy/
+config/strategy.toml
+
+# Local state
+*.db
+*.db-wal
+*.db-shm
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

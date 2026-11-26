@@ -1,0 +1,43 @@
+# Copy to config/strategy.toml (gitignored). All money values in integer cents.
+
+environment = "demo"          # "demo" | "prod"  (ADR-0010)
+allow_production = false
+
+[llm]                         # ADR-0005
+provider = "anthropic"        # any LangChain init_chat_model provider
+model = "claude-sonnet-5-5"
+prompt_path = "strategy/prompt.md"
+
+[risk.max_order_cost]         # ADR-0008
+enabled = true
+cents = 1000
+
+[risk.max_daily_loss]
+enabled = true
+cents = 2500
+
+[risk.max_open_exposure]
+enabled = true
+cents = 5000
+
+[risk.kill_switch]
+enabled = true
+
+[exits.take_profit_pct]       # ADR-0009
+enabled = true
+pct = 20
+
+[exits.stop_loss_pct]
+enabled = true
+pct = 30
+
+[exits.time_before_close]
+enabled = false
+minutes = 60
+
+[approval]                    # ADR-0006
+ttl_seconds = 60
+
+[monitor]                     # ADR-0012
+poll_interval_seconds = 5
+max_exit_reprice_attempts = 5
