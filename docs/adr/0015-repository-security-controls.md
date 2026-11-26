@@ -1,6 +1,6 @@
 # ADR-0015: Repository and supply-chain security controls
 
-- **Status:** Accepted
+- **Status:** Accepted; "Code review" clause amended by ADR-0017
 - **Date:** 2026-11-14
 
 ## Context
