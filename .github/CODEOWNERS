@@ -1,5 +1,5 @@
 # Money-moving and secret-handling code requires owner review (ADR-0015)
-/src/uatu/executor/  @OWNER
-/src/uatu/risk/      @OWNER
-/src/uatu/secrets/   @OWNER
-/docs/adr/           @OWNER
+/src/uatu/executor/  @navarra-lisandro
+/src/uatu/risk/      @navarra-lisandro
+/src/uatu/secrets/   @navarra-lisandro
+/docs/adr/           @navarra-lisandro

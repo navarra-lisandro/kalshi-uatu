@@ -75,6 +75,7 @@ uatu kill                                  # cancel all and halt
 | [0013](docs/adr/0013-audit-log-and-persistence.md) | Hash-chained SQLite audit log |
 | [0014](docs/adr/0014-cli-first-interface.md) | CLI first (Typer + Rich) |
 | [0015](docs/adr/0015-repository-security-controls.md) | Repo and supply-chain security |
+| [0016](docs/adr/0016-mit-license.md) | MIT license |
 
 ## Status
 
@@ -82,4 +83,4 @@ Design phase. See ADRs; implementation follows.
 
 ## License
 
-MIT
+[MIT](LICENSE)
