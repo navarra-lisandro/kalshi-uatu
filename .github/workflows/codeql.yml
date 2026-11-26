@@ -20,8 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
+      actions: read # CodeQL reads its own workflow run
       contents: read
-      security-events: write
+      security-events: write # upload SARIF results
     strategy:
       fail-fast: false
       matrix:
