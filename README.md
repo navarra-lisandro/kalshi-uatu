@@ -1,5 +1,7 @@
 # Kalshi Uatu
 
+[![CI](https://github.com/navarra-lisandro/kalshi-uatu/actions/workflows/ci.yml/badge.svg)](https://github.com/navarra-lisandro/kalshi-uatu/actions/workflows/ci.yml) [![CodeQL](https://github.com/navarra-lisandro/kalshi-uatu/actions/workflows/codeql.yml/badge.svg)](https://github.com/navarra-lisandro/kalshi-uatu/actions/workflows/codeql.yml)
+
 An LLM-assisted, human-approved trading assistant for [Kalshi](https://kalshi.com) prediction markets.
 An LLM proposes trades from your thesis, deterministic risk gates check them, **you approve every entry**, and the bot automatically exits positions when your configurable take-profit, stop-loss, or time rules fire.
 
@@ -76,6 +78,10 @@ uatu kill                                  # cancel all and halt
 | [0014](docs/adr/0014-cli-first-interface.md) | CLI first (Typer + Rich) |
 | [0015](docs/adr/0015-repository-security-controls.md) | Repo and supply-chain security |
 | [0016](docs/adr/0016-mit-license.md) | MIT license |
+| [0017](docs/adr/0017-solo-maintainer-branch-ruleset.md) | Solo-maintainer branch ruleset |
+| [0018](docs/adr/0018-ci-pipeline.md) | CI pipeline on GitHub Actions |
+| [0019](docs/adr/0019-ai-pr-review.md) | AI PR review (Claude Code Action) |
+| [0020](docs/adr/0020-private-strategy-companion-repo.md) | Private strategy companion repo |
 
 ## Status
 
