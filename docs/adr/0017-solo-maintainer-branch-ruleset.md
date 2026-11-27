@@ -1,6 +1,6 @@
 # ADR-0017: Solo-maintainer branch ruleset for `main`
 
-- **Status:** Accepted (amends ADR-0015, "Code review" clause)
+- **Status:** Accepted (amends ADR-0015, "Code review" clause); amended by ADR-0021
 - **Date:** 2026-11-26
 
 ## Context
