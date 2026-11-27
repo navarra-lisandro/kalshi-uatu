@@ -10,8 +10,11 @@ ADR-0015 required owner review on money-moving code. With a single maintainer th
 A GitHub **ruleset** on `main`:
 - Pull request required; **0** required approvals.
 - Required status checks: `lint`, `typecheck`, `test`, `secret-scan`, `dependency-audit`, `codeql (python)`, `codeql (actions)`, `ai-review`. Branch must be up to date before merge.
-- Block force pushes and branch deletion; require linear history (squash merge).
-- **Bypass:** repository admin (the maintainer) only, for emergencies.
+- Block force pushes and branch deletion; require linear history; squash merge only.
+- **Code scanning results:** CodeQL must report no alerts at `error` level or security alerts at `high` or above. The `codeql` checks prove the scan ran; this rule blocks on what it found.
+- **Signed commits:** required on `main`. Squash merges made in the GitHub UI are signed by GitHub, so this costs nothing and proves every commit on `main` went through GitHub.
+- **Bypass:** repository admin (the maintainer) only, mode **pull requests only**, so the bypass can merge a PR with failing checks but never push directly to `main`.
+- Merged branches are deleted automatically.
 - No other collaborators get write access; CODEOWNERS stays as documentation of sensitive paths.
 
 ## Consequences
