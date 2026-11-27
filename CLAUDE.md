@@ -8,7 +8,7 @@ This code places real-money orders. Design decisions live in `docs/adr/`; follow
 - Every entry needs human approval; exits are reduce-only (ADR-0006, ADR-0009).
 - Risk gates fail closed (ADR-0008). Demo is the default environment (ADR-0010).
 - Money is integer cents or `Decimal`, never `float` (ADR-0003).
-- Strategy files (`strategy/`, `config/strategy.toml`) never enter the repo (ADR-0002).
+- Strategy files (`strategy/`, `config/strategy.toml`) never enter this public repo; they live in the private companion repo (ADR-0002, ADR-0020). Never echo strategy contents in CI logs, commits, or PR text.
 
 ## Workflow
 - Python 3.12, `uv`. Before pushing: `uv run ruff check && uv run ruff format --check && uv run mypy && uv run pytest --cov`.

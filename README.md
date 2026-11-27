@@ -81,6 +81,7 @@ uatu kill                                  # cancel all and halt
 | [0017](docs/adr/0017-solo-maintainer-branch-ruleset.md) | Solo-maintainer branch ruleset |
 | [0018](docs/adr/0018-ci-pipeline.md) | CI pipeline on GitHub Actions |
 | [0019](docs/adr/0019-ai-pr-review.md) | AI PR review (Claude Code Action) |
+| [0020](docs/adr/0020-private-strategy-companion-repo.md) | Private strategy companion repo |
 
 ## Status
 

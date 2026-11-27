@@ -1,6 +1,6 @@
 # ADR-0002: Public engine, private strategy configuration
 
-- **Status:** Accepted
+- **Status:** Accepted; storage extended by ADR-0020
 - **Date:** 2026-11-14
 
 ## Context

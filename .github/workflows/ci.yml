@@ -65,6 +65,14 @@ jobs:
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Strategy material must never be tracked, even via `git add -f` (ADR-0002, ADR-0020).
+      - name: Guard private strategy paths
+        run: |
+          leaked=$(git log --all --name-only --format= | sort -u \
+            | grep -E '^strategy/|^config/strategy\.toml$|\.(pem|key|db)$' || true)
+          if [ -n "$leaked" ]; then
+            echo "::error::Private files found in git history:"; echo "$leaked"; exit 1
+          fi
 
   dependency-audit:
     name: dependency-audit
